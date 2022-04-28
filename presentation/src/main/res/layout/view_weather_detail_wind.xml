@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lav_temp_wind"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/wind_speed_icon" />
+
+    <TextView
+        android:id="@+id/tv_wind_speed"
+        style="@style/TextAppearance.Material3.TitleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/material_dynamic_tertiary30"
+        app:layout_constraintStart_toEndOf="@id/lav_temp_wind"
+        app:layout_constraintTop_toTopOf="@id/lav_temp_wind"
+        app:layout_constraintBottom_toTopOf="@id/tv_pressure"
+        tools:text="Speed: 45 mph | SSE" />
+
+    <TextView
+        android:id="@+id/tv_pressure"
+        style="@style/TextAppearance.Material3.TitleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tv_wind_speed"
+        app:layout_constraintTop_toBottomOf="@id/tv_wind_speed"
+        app:layout_constraintBottom_toBottomOf="@id/lav_temp_wind"
+        tools:text="Pressure: 12 mbar" />
+
+    <TextView
+        android:id="@+id/tv_humidity"
+        style="@style/TextAppearance.Material3.TitleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tv_wind_speed"
+        app:layout_constraintTop_toBottomOf="@id/tv_pressure"
+        app:layout_constraintBottom_toBottomOf="@id/lav_temp_wind"
+        tools:text="Humidity: 45%" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

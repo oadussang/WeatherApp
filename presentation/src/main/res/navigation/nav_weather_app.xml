@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_weather_app"
+    app:startDestination="@id/MainScreen">
+
+    <fragment
+        android:id="@+id/MainScreen"
+        android:name="net.klonima.boldWeather.ui.fragment.MainFragment"
+        android:label="fragment_main_screen"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_MainScreen_to_blankFragment"
+            app:destination="@id/blankFragment">
+            <argument
+                android:name="arg_woeid"
+                app:argType="string"
+                android:defaultValue="" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/blankFragment"
+        android:name="net.klonima.boldWeather.ui.fragment.BlankFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_blank">
+    </fragment>
+
+</navigation>

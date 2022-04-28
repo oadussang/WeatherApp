@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_text_placeholder">Buscar ciudad o ubicación</string>
+    <string name="text_search_city">Busca el estado del tiempo:</string>
+</resources>
