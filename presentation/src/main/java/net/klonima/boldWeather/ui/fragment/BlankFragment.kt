@@ -1,5 +1,6 @@
 package net.klonima.boldWeather.ui.fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,9 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import net.klonima.boldWeather.databinding.FragmentBlankBinding
 import net.klonima.boldWeather.extension.parseHourAndMinute
@@ -58,6 +62,11 @@ class BlankFragment : Fragment() {
         setClickListeners()
         initViewModel()
         adapter = ForecastAdapter(listOf())
+        binding.rvForecast.layoutManager = when(this.activity?.resources?.configuration?.orientation) {
+            Configuration.ORIENTATION_LANDSCAPE -> GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
+            Configuration.ORIENTATION_PORTRAIT -> LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+            else -> LinearLayoutManager(context)
+        }
         binding.rvForecast.adapter = adapter
         setListeners()
     }
