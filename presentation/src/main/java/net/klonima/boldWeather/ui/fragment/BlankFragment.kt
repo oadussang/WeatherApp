@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,13 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import net.klonima.boldWeather.databinding.FragmentBlankBinding
+import net.klonima.boldWeather.extension.handleErrors
 import net.klonima.boldWeather.extension.parseHourAndMinute
 import net.klonima.boldWeather.ui.adapter.ForecastAdapter
-import net.klonima.boldWeather.ui.adapter.LocationResultAdapter
 import net.klonima.boldWeather.viewmodel.WeatherViewModel
-import net.klonima.domain.utils.StringUtils
 
-private const val ARG_WOEID = "arg_woeid"
+
 
 @AndroidEntryPoint
 class BlankFragment : Fragment() {
@@ -33,6 +31,7 @@ class BlankFragment : Fragment() {
     private val viewModel: WeatherViewModel by viewModels()
 
     companion object {
+        private const val ARG_WOEID = "arg_woeid"
         @JvmStatic
         fun newInstance(woeId: String) =
             BlankFragment().apply {
@@ -108,6 +107,6 @@ class BlankFragment : Fragment() {
             // forecast
             adapter.setDataSet(it)
         }
-        viewModel.message.observe(viewLifecycleOwner) { Toast.makeText(context, it, Toast.LENGTH_SHORT).show()  }
+        viewModel.exception.observe(viewLifecycleOwner) { handleErrors(it) }
     }
 }

@@ -5,13 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import net.klonima.boldWeather.databinding.FragmentMainBinding
+import net.klonima.boldWeather.extension.handleErrors
 import net.klonima.boldWeather.ui.adapter.LocationResultAdapter
 import net.klonima.domain.utils.StringUtils.Companion.EMPTY_STRING
 import net.klonima.domain.utils.StringUtils.Companion.QUERY_FILLER_STRING
@@ -52,7 +52,7 @@ class MainFragment : Fragment() {
             }
             adapter.setDataSet(dataset = Pair(pair.first, pair.second.map { it }.filter{ it.title?.isNotBlank() ?: false }))
         }
-        viewModel.message.observe(viewLifecycleOwner) { Toast.makeText(context, it, Toast.LENGTH_SHORT).show()  }
+        viewModel.exception.observe(viewLifecycleOwner) { handleErrors(it) }
         adapter.setItemClickListener { woeId -> woeId?.let { navigateToWeatherDetail(it) }}
     }
 

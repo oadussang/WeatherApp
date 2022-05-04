@@ -20,7 +20,7 @@ class WeatherViewModel @Inject constructor(
 ) : ViewModel() {
 
     val locationList: MutableLiveData<Pair<String,List<LocationEntity>>> by lazy { MutableLiveData<Pair<String,List<LocationEntity>>>() }
-    val message: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    val exception: MutableLiveData<Throwable> by lazy { MutableLiveData<Throwable>() }
 
     val weatherDetails: MutableLiveData<WeatherDetailUiEntity> by lazy { MutableLiveData<WeatherDetailUiEntity>() }
     val weatherForecast: MutableLiveData<List<WeatherForecastUiEntity>> by lazy { MutableLiveData<List<WeatherForecastUiEntity>>() }
@@ -30,7 +30,7 @@ class WeatherViewModel @Inject constructor(
             execute(
                 useCaseCall = getLocationByQueryUseCase.invoke(query),
                 onSuccess = { responseList: List<LocationEntity> -> locationList.value = Pair(query,responseList) },
-                onFailure = { failureMessage -> message.value = failureMessage }
+                onFailure = { exception.value = it }
             )
         }
     }
@@ -45,7 +45,7 @@ class WeatherViewModel @Inject constructor(
                         weatherForecast.value = WeatherForecastUiEntity.mapFromDomain(it)
                     }
                 },
-                onFailure = { failureMessage -> message.value = failureMessage }
+                onFailure = { exception.value = it }
             )
         }
     }

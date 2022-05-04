@@ -5,6 +5,9 @@ import net.klonima.data.entity.response.WeatherLocationResponseDTO
 import net.klonima.data.entity.response.mapToDomain
 import net.klonima.domain.entity.LocationEntity
 import net.klonima.domain.entity.WeatherDetailInformationEntity
+import net.klonima.domain.entity.error.BaseException
+import net.klonima.domain.utils.StringUtils.Companion.EMPTY_STRING
+import java.net.UnknownHostException
 
 @JvmName("LocationMapNetworkResponse")
 fun Result<List<LocationResponseDTO>>.mapNetworkResponse(): Result<List<LocationEntity>> {
@@ -13,7 +16,11 @@ fun Result<List<LocationResponseDTO>>.mapNetworkResponse(): Result<List<Location
             return Result.success( response.map { entityDTO -> entityDTO.mapToDomain() })
         },
         onFailure = {
-            return Result.failure(it)
+            val exception = when(it) {
+                is UnknownHostException -> BaseException.NoInternetException(Exception(it.message))
+                else -> BaseException.UnexpectedException(cause = Exception(it.message ?: EMPTY_STRING))
+            }
+            return Result.failure(exception)
         }
     )
 }

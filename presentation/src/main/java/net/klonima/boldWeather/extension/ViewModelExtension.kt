@@ -7,18 +7,18 @@ import net.klonima.domain.utils.StringUtils.Companion.EMPTY_STRING
 fun <T> CoroutineScope.execute(
     useCaseCall: Result<List<T>>,
     onSuccess: (List<T>) -> Unit,
-    onFailure: (message: String)->Unit
+    onFailure: (throwable: Throwable?)->Unit
 ) {
     kotlin.runCatching { useCaseCall }
         .onSuccess {
             if (it.isFailure) {
-                onFailure.invoke(it.toString())
+                onFailure.invoke(it.exceptionOrNull())
             } else {
                 onSuccess.invoke(it.getOrDefault(listOf()))
             }
         }
         .onFailure {
-            onFailure.invoke(it.localizedMessage ?: EMPTY_STRING)
+            onFailure.invoke(it)
         }
 }
 
@@ -26,17 +26,17 @@ fun <T> CoroutineScope.execute(
 fun <T> CoroutineScope.execute(
     useCaseCall: Result<T>,
     onSuccess: (T?) -> Unit,
-    onFailure: (message: String)->Unit
+    onFailure: (throwable: Throwable?)->Unit
 ) {
     kotlin.runCatching { useCaseCall }
         .onSuccess {
             if (it.isFailure) {
-                onFailure.invoke(it.toString())
+                onFailure.invoke(it.exceptionOrNull())
             } else {
                 onSuccess.invoke(it.getOrNull())
             }
         }
         .onFailure {
-            onFailure.invoke(it.localizedMessage ?: EMPTY_STRING)
+            onFailure.invoke(it)
         }
 }
