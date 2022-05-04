@@ -12,5 +12,4 @@ Used Tools for compilation.
 Missing Features:
 
   - Unit Testing
-  - Error Handling through CustomExceptions
   - Instrumentation testing
